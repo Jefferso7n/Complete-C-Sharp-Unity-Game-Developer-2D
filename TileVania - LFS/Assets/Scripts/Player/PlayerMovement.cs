@@ -11,8 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float climbSpeed = 5f;
 
     [SerializeField] Rigidbody2D myRigidbody2D;
-    [SerializeField] CapsuleCollider2D myCapsuleCollider2D;
+    [SerializeField] BoxCollider2D myFeetCollider2D;
     [SerializeField] Animator myAnimator;
+    [SerializeField] PlayerHealth playerHealth;
 
     Vector2 moveInput;
     float gravityScaleAtStart;
@@ -24,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!playerHealth.IsALive) { return; }
+
         Run();
         FlipSprite();
         ClimbLadder();
@@ -31,12 +34,16 @@ public class PlayerMovement : MonoBehaviour
 
     void OnMove(InputValue value)
     {
+        if (!playerHealth.IsALive) { return; }
+
         moveInput = value.Get<Vector2>();
     }
 
     void OnJump(InputValue value)
     {
-        if (!myCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return; }
+        if (!playerHealth.IsALive) { return; }
+
+        if (!myFeetCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return; }
 
         if (value.isPressed)
         {
@@ -62,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ClimbLadder()
     {
-        if (!myCapsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        if (!myFeetCollider2D.IsTouchingLayers(LayerMask.GetMask("Climbing")))
         {
             myRigidbody2D.gravityScale = gravityScaleAtStart;
             myAnimator.SetBool("isClimbing", false);
