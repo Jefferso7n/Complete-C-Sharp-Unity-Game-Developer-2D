@@ -13,15 +13,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] CinemachineImpulseSource myImpulseSource;
     [SerializeField] Vector2 deathKick = new Vector2(20f, 20f);
     [SerializeField] float impulseForce = 1f;
-    
-    bool isALive = true;
+
+    public bool isALive = true;
     public bool IsALive { get => isALive; set => isALive = value; }
-
-    void Start()
-    {
-
-    }
-
 
     void Update()
     {
@@ -30,13 +24,15 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        if (myBodyCollider2D.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        if (IsALive && myBodyCollider2D.IsTouchingLayers(LayerMask.GetMask("Enemies", "Water", "Hazards")))
         {
             IsALive = false;
             myRigidbody2D.velocity = deathKick;
 
             myAnimator.SetTrigger("Dying");
             myImpulseSource.GenerateImpulse(impulseForce);
+
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
     }
 }

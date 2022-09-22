@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Animator myAnimator;
     [SerializeField] PlayerHealth playerHealth;
 
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform gun;
+
     Vector2 moveInput;
     float gravityScaleAtStart;
 
@@ -30,6 +33,13 @@ public class PlayerMovement : MonoBehaviour
         Run();
         FlipSprite();
         ClimbLadder();
+    }
+
+    void OnFire(InputValue value)
+    {
+        if (!playerHealth.IsALive) { return; }
+
+        Instantiate(bullet, gun.position, transform.rotation);
     }
 
     void OnMove(InputValue value)

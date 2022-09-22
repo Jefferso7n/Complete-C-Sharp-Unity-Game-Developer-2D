@@ -8,10 +8,14 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] Rigidbody2D myRigidbody2D;
 
     [SerializeField] float moveSpeed = 1f;
+    [SerializeField] bool startsFlipped;
 
     void Start()
     {
-
+        if(startsFlipped){
+            moveSpeed *= -1;
+            FlipEnemyFacing();
+        }
     }
 
     void Update()
