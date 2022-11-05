@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fadce9520572a42428cf5f011d735a57, type: 3}
   m_Name: Question 3
   m_EditorClassIdentifier: 
-  question: Question 3
+  question: "Who was George W. Bush\u2019 vice president?\r"
   answers:
-  - Answer 13
-  - Answer 14
-  - Answer 15
-  - Answer 16
+  - Kamala Harris
+  - Joe Biden
+  - Al Gore
+  - Dick Cheney
   correctAnswerIndex: 3
